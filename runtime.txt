@@ -1,0 +1,811 @@
+RUNTIMES
+----------------------------------------------------
+
+DISCUSSION:
+----------------------------------------------------
+While looking through the cases one can notice that using system calls makes the program runs slightly over double the execution time as using standard I/O calls. As it slowly progresses 
+
+**** NOTE: ****
+Test cases are made by running createFile file. Precreated test cases have been generated and included in dal220-p1/Test\ Files/.
+
+Contents of folder
+----------------------
+dal220@Chronos:~/workspace/NCP Project 1/substring/dal220-p1/Test Files$ ls -lh
+total 166M
+-rw-rw-r-- 1 dal220 dal220 100K Feb 14 17:53 100KB
+-rw-rw-r-- 1 dal220 dal220  10K Feb 14 17:53 10KB
+-rw-rw-r-- 1 dal220 dal220  10M Feb 14 17:50 10MB
+-rw-rw-r-- 1 dal220 dal220 1.0K Feb 14 17:52 1KB
+-rw-rw-r-- 1 dal220 dal220 1.0M Feb 14 17:43 1MB
+-rw-rw-r-- 1 dal220 dal220  20M Feb 14 17:57 20MB
+-rw-rw-r-- 1 dal220 dal220 2.0M Feb 14 17:46 2MB
+-rw-rw-r-- 1 dal220 dal220  40M Feb 14 17:58 40MB
+-rw-rw-r-- 1 dal220 dal220 4.0M Feb 14 17:47 4MB
+-rw-rw-r-- 1 dal220 dal220  80M Feb 14 17:59 80MB
+-rw-rw-r-- 1 dal220 dal220 8.0M Feb 14 17:48 8MB
+-rw-rw-r-- 1 dal220 dal220  187 Feb 14 17:59 main.c
+-rw-rw-r-- 1 dal220 dal220  859 Feb 14 18:04 makefile
+dal220@Chronos:~/workspace/NCP Project 1/substring/dal220-p1/Test Files$ 
+
+
+To Generate new test files for yourself:
+------------------------------------------------
+Go to dal220-p1/Test\ Files/
+make
+./cF
+A file of a specified size will be generated. Have to hard code value.
+Creates a file consisting of a repition of the string "aabbccdd".
+
+
+Test Script Output
+--------------------------------------
+dal220@Chronos:~/workspace/NCP Project 1/substring$ sh test-p1.sh dal220-p1.tar.gz
+gcc -Wall -std=c99 -pedantic -g -Werror -c main.c -o main.o
+gcc -Wall -std=c99 -pedantic -g -Werror -c fileManager.c -o fileManager.o
+ar rc ./libtoken.a ./main.o ./fileManager.o
+gcc -Wall -std=c99 -pedantic -g -Werror ./libtoken.a -o p1
+make clean
+make[1]: Entering directory `/home/dal220/workspace/NCP Project 1/substring/dal220-p1'
+rm -f *.o *~
+rm -f ./libtoken.a
+make[1]: Leaving directory `/home/dal220/workspace/NCP Project 1/substring/dal220-p1'
+PASS build
+PASS Test 1
+PASS Test 2
+PASS Test 3
+dal220@Chronos:~/workspace/NCP Project 1/substring$ 
+
+
+Sakai Sample Output
+--------------------------------------
+dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s bar bc
+1
+Execution time: 0.000155s
+
+
+
+1KB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ "dal220-p1/Test Files/1KB" 1KB aa
+	128
+	Execution time: 0.000236s
+
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1KB" aa bb
+	128
+	128
+	Execution time: 0.000276s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1KB" aa bb bc
+	128
+	128
+	128
+	Execution time: 0.000323s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1KB" aa bb bc e
+	128
+	128
+	128
+	0
+	Execution time: 0.000252s
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s 1KB aa
+	128
+	Execution time: 0.000771s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1KB" aa bb
+	128
+	128
+	Execution time: 0.000680s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1KB" aa bb bc e
+	128
+	128
+	128
+	0
+	Execution time: 0.000766s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1KB" aa bb bc e a
+	128
+	128
+	128
+	0
+	256
+	Execution time: 0.000831s
+
+
+
+
+10KB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10KB" aa
+	1280
+	Execution time: 0.000845s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10KB" aa bb
+	1280
+	1280
+	Execution time: 0.001242s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10KB" aa bb bc
+	1280
+	1280
+	1280
+	Execution time: 0.001647s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10KB" aa bb bc e
+	1280
+	1280
+	1280
+	0
+	Execution time: 0.001996s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10KB" aa bb bc e a
+	1280
+	1280
+	1280
+	0
+	2560
+	Execution time: 0.002413s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10KB" aa
+	1280
+	Execution time: 0.005207s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10KB" aa bb
+	1280
+	1280
+	Execution time: 0.005632s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10KB" aa bb bc
+	1280
+	1280
+	1280
+	Execution time: 0.005945s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10KB" aa bb bc e
+	1280
+	1280
+	1280
+	0
+	Execution time: 0.006342s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10KB" aa bb bc e a
+	1280
+	1280
+	1280
+	0
+	2560
+	Execution time: 0.006774s
+
+
+
+100KB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/100KB" aa
+	12800
+	Execution time: 0.006371s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/100KB" aa bb
+	12800
+	12800
+	Execution time: 0.010436s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/100KB" aa bb bc
+	12800
+	12800
+	12800
+	Execution time: 0.013753s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/100KB" aa bb bc e
+	12800
+	12800
+	12800
+	0
+	Execution time: 0.017296s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/100KB" aa bb bc e a
+	12800
+	12800
+	12800
+	0
+	25600
+	Execution time: 0.021269s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/100KB" aa
+	12800
+	Execution time: 0.045215s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/100KB" aa bb
+	12800
+	12800
+	Execution time: 0.048881s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/100KB" aa bb bc
+	12800
+	12800
+	12800
+	Execution time: 0.052063s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/100KB" aa bb bc e
+	12800
+	12800
+	12800
+	0
+	Execution time: 0.055439s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/100KB" aa bb bc e a
+	12800
+	12800
+	12800
+	0
+	25600
+	Execution time: 0.057422s
+
+
+
+1MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1MB" aa
+	131072
+	Execution time: 0.056382s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1MB" aa bb
+	131072
+	131072
+	Execution time: 0.084813s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1MB" aa bb bc
+	131072
+	131072
+	131072
+	Execution time: 0.108131s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1MB" aa bb bc e
+	131072
+	131072
+	131072
+	0
+	Execution time: 0.129108s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/1MB" aa bb bc e a
+	131072
+	131072
+	131072
+	0
+	262144
+	Execution time: 0.140110s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1MB" aa
+	131072
+	Execution time: 0.269544s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1MB" aa bb
+	131072
+	131072
+	Execution time: 0.282179s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1MB" aa bb bc
+	131072
+	131072
+	131072
+	Execution time: 0.296341s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1MB" aa bb bc e
+	131072
+	131072
+	131072
+	0
+	Execution time: 0.312889s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/1MB" aa bb bc e a
+	131072
+	131072
+	131072
+	0
+	262144
+	Execution time: 0.332956s
+
+
+
+2MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/2MB" aa
+	262144
+	Execution time: 0.099016s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/2MB" aa bb
+	262144
+	262144
+	Execution time: 0.143000s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/2MB" aa bb bc
+	262144
+	262144
+	262144
+	Execution time: 0.183067s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/2MB" aa bb bc e
+	262144
+	262144
+	262144
+	0
+	Execution time: 0.203765s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/2MB" aa bb bc e a
+	262144
+	262144
+	262144
+	0
+	524288
+	Execution time: 0.248462s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/2MB" aa
+	262144
+	Execution time: 0.448461s
+	
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/2MB" aa bb
+	262144
+	262144
+	Execution time: 0.475938s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/2MB" aa bb bc
+	262144
+	262144
+	262144
+	Execution time: 0.501846s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/2MB" aa bb bc e
+	262144
+	262144
+	262144
+	0
+	Execution time: 0.534081s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/2MB" aa bb bc e a
+	262144
+	262144
+	262144
+	0
+	524288
+	Execution time: 0.591553s
+
+
+
+4MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/4MB" aa
+	524288
+	Execution time: 0.166555s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/4MB" aa bb
+	524288
+	524288
+	Execution time: 0.232607s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/4MB" aa bb bc
+	524288
+	524288
+	524288
+	Execution time: 0.293481s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/4MB" aa bb bc e
+	524288
+	524288
+	524288
+	0
+	Execution time: 0.343945s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/4MB" aa bb bc e a
+	524288
+	524288
+	524288
+	0
+	1048576
+	Execution time: 0.403562s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/4MB" aa
+	524288
+	Execution time: 0.806729s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/4MB" aa bb
+	524288
+	524288
+	Execution time: 0.870904s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/4MB" aa bb bc
+	524288
+	524288
+	524288
+	Execution time: 0.926736s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/4MB" aa bb bc e
+	524288
+	524288
+	524288
+	0
+	Execution time: 0.985259s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/4MB" aa bb bc e a
+	524288
+	524288
+	524288
+	0
+	1048576
+	Execution time: 1.044276s
+
+
+
+8MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/8MB" aa
+	1048576
+	Execution time: 0.270242s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/8MB" aa bb
+	1048576
+	1048576
+	Execution time: 0.385375s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/8MB" aa bb bc
+	1048576
+	1048576
+	1048576
+	Execution time: 0.497638s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/8MB" aa bb bc e
+	1048576
+	1048576
+	1048576
+	0
+	Execution time: 0.604763s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/8MB" aa bb bc e a
+	1048576
+	1048576
+	1048576
+	0
+	2097152
+	Execution time: 0.722476s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/8MB" aa
+	1048576
+	Execution time: 1.528321s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/8MB" aa bb
+	1048576
+	1048576
+	Execution time: 1.641778s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/8MB" aa bb bc
+	1048576
+	1048576
+	1048576
+	Execution time: 1.763756s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/8MB" aa bb bc e
+	1048576
+	1048576
+	1048576
+	0
+	Execution time: 1.859953s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/8MB" aa bb bc e a
+	1048576
+	1048576
+	1048576
+	0
+	2097152
+	Execution time: 1.984231s
+
+
+
+10MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10MB" aa
+	1310720
+	Execution time: 0.313983s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10MB" aa bb
+	1310720
+	1310720
+	Execution time: 0.455243s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10MB" aa bb bc
+	1310720
+	1310720
+	1310720
+	Execution time: 0.598805s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10MB" aa bb bc e
+	1310720
+	1310720
+	1310720
+	0
+	Execution time: 0.727523s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/10MB" aa bb bc e a
+	1310720
+	1310720
+	1310720
+	0
+	2621440
+	Execution time: 0.883969s
+
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10MB" aa
+	1310720
+	Execution time: 1.891482s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10MB" aa bb
+	1310720
+	1310720
+	Execution time: 2.033028s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10MB" aa bb bc
+	1310720
+	1310720
+	1310720
+	Execution time: 2.168044s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10MB" aa bb bc e
+	1310720
+	1310720
+	1310720
+	0
+	Execution time: 2.300726s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/10MB" aa bb bc e a
+	1310720
+	1310720
+	1310720
+	0
+	2621440
+	Execution time: 2.543027s
+
+
+
+20MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/20MB" aa
+	2621440
+	Execution time: 0.534480s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/20MB" aa bb
+	2621440
+	2621440
+	Execution time: 0.814272s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/20MB" aa bb bc
+	2621440
+	2621440
+	2621440
+	Execution time: 1.104078s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/20MB" aa bb bc e
+	2621440
+	2621440
+	2621440
+	0
+	Execution time: 1.446905s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/20MB" aa bb bc e a
+	2621440
+	2621440
+	2621440
+	0
+	5242880
+	Execution time: 1.659056s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/20MB" aa
+	2621440
+	Execution time: 3.731090s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/20MB" aa bb
+	2621440
+	2621440
+	Execution time: 3.994193s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/20MB" aa bb bc
+	2621440
+	2621440
+	2621440
+	Execution time: 4.267721s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/20MB" aa bb bc e
+	2621440
+	2621440
+	2621440
+	0
+	Execution time: 4.711468s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/20MB" aa bb bc e a
+	2621440
+	2621440
+	2621440
+	0
+	5242880
+	Execution time: 4.825752s
+
+
+
+40MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/40MB" aa
+	5242880
+	Execution time: 0.980786s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/40MB" aa bb
+	5242880
+	5242880
+	Execution time: 1.548350s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/40MB" aa bb bc
+	5242880
+	5242880
+	5242880
+	Execution time: 2.123276s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/40MB" aa bb bc e
+	5242880
+	5242880
+	5242880
+	0
+	Execution time: 2.634979s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/40MB" aa bb bc e a
+	5242880
+	5242880
+	5242880
+	0
+	10485760
+	Execution time: 3.215773s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/40MB" aa
+	5242880
+	Execution time: 7.324854s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/40MB" aa bb
+	5242880
+	5242880
+	Execution time: 8.011662s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/40MB" aa bb bc
+	5242880
+	5242880
+	5242880
+	Execution time: 8.486299s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/40MB" aa bb bc e
+	5242880
+	5242880
+	5242880
+	0
+	Execution time: 8.953616s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/40MB" aa bb bc e a
+	5242880
+	5242880
+	5242880
+	0
+	10485760
+	Execution time: 9.547154s
+
+
+
+80MB file
+---------------------------
+* Standard I/O Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/80MB" aa
+	10485760
+	Execution time: 1.789924s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/80MB" aa bb
+	10485760
+	10485760
+	Execution time: 3.014639s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/80MB" aa bb bc
+	10485760
+	10485760
+	10485760
+	Execution time: 4.157896s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/80MB" aa bb bc e
+	10485760
+	10485760
+	10485760
+	0
+	Execution time: 5.189639s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 "dal220-p1/Test Files/80MB" aa bb bc e a
+	10485760
+	10485760
+	10485760
+	0
+	20971520
+	Execution time: 6.360215s
+
+
+* System Call Output
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/80MB" aa
+	10485760
+	Execution time: 14.568644s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/80MB" aa bb
+	10485760
+	10485760
+	Execution time: 16.218773s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/80MB" aa bb bc
+	10485760
+	10485760
+	10485760
+	Execution time: 16.911456s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/80MB" aa bb bc e
+	10485760
+	10485760
+	10485760
+	0
+	Execution time: 18.051286s
+
+	dal220@Chronos:~/workspace/NCP Project 1/substring$ ./p1 -s "dal220-p1/Test Files/80MB" aa bb bc e a
+	10485760
+	10485760
+	10485760
+	0
+	20971520
+	Execution time: 19.362554s
+
