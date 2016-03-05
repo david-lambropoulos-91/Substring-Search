@@ -1,3 +1,4 @@
+#Substring Search
 This application requires at least two arguments. The second argument specifies the file in which you will be finding sub-strings. The third and remaining arguments are sub-strings that are to be searched for in the file specified by the second argument.
 
 In our problem, "sub-strings" are not necessarily separated by whitespace; that's why we're calling them "substrings" instead of "words".
